@@ -4,90 +4,23 @@ import std;
 
 void main(string[] args)
 {
+    writeln("aoc22 day02");
+
     int score = 0;
 
     foreach (key; split(input, '\n'))
     {
-        switch (key[0])
+        switch (key)
         {
-            case 'A':
-            {
-                switch (key[2])
-                {
-                    case 'X':
-                    {
-                        score += 1;
-                        score += 3;
-                    } 
-                    break;
-                    case 'Y': 
-                    {
-                        score += 2;
-                        score += 6;
-                    }
-                    break;
-                    case 'Z': 
-                    {
-                        score += 3;
-                        score += 0;
-                    }
-                    break;
-                    default:break;
-                }
-            } 
-            break;
-            case 'B': 
-            {
-                switch (key[2])
-                {
-                    case 'X':
-                    {
-                        score += 1;
-                        score += 0;
-                    } 
-                    break;
-                    case 'Y': 
-                    {
-                        score += 2;
-                        score += 3;
-                    }
-                    break;
-                    case 'Z': 
-                    {
-                        score += 3;
-                        score += 6;
-                    }
-                    break;
-                    default:break;
-                }
-            }
-            break;
-            case 'C': 
-            {
-                switch (key[2])
-                {
-                    case 'X':
-                    {
-                        score += 1;
-                        score += 6;
-                    } 
-                    break;
-                    case 'Y': 
-                    {
-                        score += 2;
-                        score += 0;
-                    }
-                    break;
-                    case 'Z': 
-                    {
-                        score += 3;
-                        score += 3;
-                    }
-                    break;
-                    default:break;
-                }
-            }
-            break;
+            case "A X": score += 1 + 3; break;
+            case "A Y": score += 2 + 6; break;
+            case "A Z": score += 3 + 0; break;
+            case "B X": score += 1 + 0; break;
+            case "B Y": score += 2 + 3; break;
+            case "B Z": score += 3 + 6; break;
+            case "C X": score += 1 + 6; break;
+            case "C Y": score += 2 + 0; break;
+            case "C Z": score += 3 + 3; break;
             default:break;
         }
     }
@@ -98,86 +31,17 @@ void main(string[] args)
 
     foreach (key; split(input, '\n'))
     {
-        switch (key[0])
+        switch (key)
         {
-            case 'A':
-            {
-                switch (key[2])
-                {
-                    case 'X':
-                    {
-                        score += 3;
-                        score += 0;
-                    } 
-                    break;
-                    case 'Y': 
-                    {
-                        score += 1;
-                        score += 3;
-                    }
-                    break;
-                    case 'Z': 
-                    {
-                        score += 2;
-                        score += 6;
-                    }
-                    break;
-                    default:break;
-                }
-            } 
-            break;
-            case 'B': 
-            {
-                switch (key[2])
-                {
-                    case 'X':
-                    {
-                        score += 1;
-                        score += 0;
-                    } 
-                    break;
-                    case 'Y': 
-                    {
-                        score += 2;
-                        score += 3;
-                    }
-                    break;
-                    case 'Z': 
-                    {
-                        score += 3;
-                        score += 6;
-                    }
-                    break;
-                    default:break;
-                }
-            }
-            break;
-            case 'C': 
-            {
-                switch (key[2])
-                {
-                    case 'X':
-                    {
-                        score += 2;
-                        score += 0;
-                    } 
-                    break;
-                    case 'Y': 
-                    {
-                        score += 3;
-                        score += 3;
-                    }
-                    break;
-                    case 'Z': 
-                    {
-                        score += 1;
-                        score += 6;
-                    }
-                    break;
-                    default:break;
-                }
-            }
-            break;
+            case "A X": score += 3 + 0; break;
+            case "A Y": score += 1 + 3; break;
+            case "A Z": score += 2 + 6; break;
+            case "B X": score += 1 + 0; break;
+            case "B Y": score += 2 + 3; break;
+            case "B Z": score += 3 + 6; break;
+            case "C X": score += 2 + 0; break;
+            case "C Y": score += 3 + 3; break;
+            case "C Z": score += 1 + 6; break;
             default:break;
         }
     }
