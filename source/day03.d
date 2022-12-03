@@ -6,21 +6,17 @@ void main(string[] args)
 {
     writeln("aoc22 day 03");
 
+    auto split = split(input, '\n');
     int sum = 0;
 
-    foreach (line; split(input, '\n'))
+    foreach (line; split)
     {
-        auto count = count(line);
-
-        outer: foreach (firsthalf; line[0..(count/2)])
+        foreach (character; line[0 .. ($ / 2)]) // $ == line.length
         {
-            foreach (secondhalf; line[count/2..count])
+            if (canFind(line[line.length / 2 .. line.length], character))
             {
-                if (firsthalf == secondhalf)
-                {
-                    sum += getPriority(firsthalf);
-                    break outer;
-                }
+                sum += getPriority(character);
+                break;
             }
         }
     }
@@ -28,19 +24,15 @@ void main(string[] args)
     writeln("part 1: ", sum);
 
     sum = 0;
-    auto split = split(input, '\n');
 
-    for (int i = 0; i < count(split); i += 3)
+    for (int i = 0; i < split.length; i += 3)
     {
-        auto first = split[i];
-        auto second = split[i+1];
-        auto third = split[i+2];
-
-        foreach (firstchar; first)
+        auto parts = split[i .. i + 3];
+        foreach (part; parts[0])
         {
-            if (second.canFind(firstchar) && third.canFind(firstchar))
+            if (canFind(parts[1], part) && canFind(parts[2], part))
             {
-                sum += getPriority(firstchar);
+                sum += getPriority(part);
                 break;
             }
         }
