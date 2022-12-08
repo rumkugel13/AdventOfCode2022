@@ -17,119 +17,69 @@ void main(string[] args)
     const int cols = grid[0].length;
     writeln("rows: ", rows, " cols: ", cols);
 
-    int[string] visible;
-
-    foreach (x; 1 .. rows - 1)
-    {
-        int maxheight = to!int(grid[0][x] - '0');
-
-        foreach (ydown; 1 .. cols - 1)
-        {
-            int height = to!int(grid[ydown][x] - '0');
-            if (height > maxheight)
-            {
-                visible[to!string(x) ~ "," ~ to!string(ydown)] = 1;
-                maxheight = height;
-            }
-            else if (maxheight == 9)
-                break;
-        }
-
-        maxheight = to!int(grid[cols - 1][x] - '0');
-
-        foreach_reverse (yup; 1 .. cols - 1)
-        {
-            int height = to!int(grid[yup][x] - '0');
-            if (height > maxheight)
-            {
-                visible[to!string(x) ~ "," ~ to!string(yup)] = 1;
-                maxheight = height;
-            }
-            else if (maxheight == 9)
-                break;
-        }
-    }
-
-    foreach (y; 1 .. cols - 1)
-    {
-        int maxheight = to!int(grid[y][0] - '0');
-
-        foreach (xright; 1 .. rows - 1)
-        {
-            int height = to!int(grid[y][xright] - '0');
-            if (height > maxheight)
-            {
-                visible[to!string(xright) ~ "," ~ to!string(y)] = 1;
-                maxheight = height;
-            }
-            else if (maxheight == 9)
-                break;
-        }
-
-        maxheight = to!int(grid[y][rows - 1] - '0');
-
-        foreach_reverse (xleft; 1 .. rows - 1)
-        {
-            int height = to!int(grid[y][xleft] - '0');
-            if (height > maxheight)
-            {
-                visible[to!string(xleft) ~ "," ~ to!string(y)] = 1;
-                maxheight = height;
-            }
-            else if (maxheight == 9)
-                break;
-        }
-    }
-
-    writeln("part 1: ", visible.length + 2 * rows + 2 * cols - 4);
-
+    int count = 0;
     int maxScore = 0;
 
     foreach (y; 0 .. rows)
     {
         foreach (x; 0 .. cols)
         {
-            const int height = to!int(grid[y][x] - '0');
+            const int height = grid[y][x] - '0';
 
+            bool up = true;
             int upDistance = 0;
             foreach_reverse (yup; 0 .. y)
             {
-                int temp = to!int(grid[yup][x] - '0');
+                int temp = grid[yup][x] - '0';
                 upDistance++;
                 if (temp >= height)
+                {
+                    up = false;
                     break;
-
+                }
             }
 
+            bool down = true;
             int downDistance = 0;
-            foreach (ydown; y + 1 .. cols)
+            foreach (ydown; y + 1 .. rows)
             {
-                int temp = to!int(grid[ydown][x] - '0');
+                int temp = grid[ydown][x] - '0';
                 downDistance++;
                 if (temp >= height)
+                {
+                    down = false;
                     break;
-
+                }
             }
 
+            bool left = true;
             int leftDistance = 0;
             foreach_reverse (xleft; 0 .. x)
             {
-                int temp = to!int(grid[y][xleft] - '0');
+                int temp = grid[y][xleft] - '0';
                 leftDistance++;
                 if (temp >= height)
+                {
+                    left = false;
                     break;
-
+                }
             }
 
+            bool right = true;
             int rightDistance = 0;
-            foreach (xright; x + 1 .. rows)
+            foreach (xright; x + 1 .. cols)
             {
-                int temp = to!int(grid[y][xright] - '0');
+                int temp = grid[y][xright] - '0';
                 rightDistance++;
                 if (temp >= height)
+                {
+                    right = false;
                     break;
-
+                }
             }
+
+            if (up || down || left || right)
+                count++;
 
             int score = upDistance * downDistance * leftDistance * rightDistance;
             if (score > maxScore)
@@ -137,6 +87,7 @@ void main(string[] args)
         }
     }
 
+    writeln("part 1: ", count);
     writeln("part 2: ", maxScore);
 }
 
