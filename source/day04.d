@@ -1,6 +1,6 @@
 module day04;
 
-import std.algorithm, std.array, std.stdio, std.conv, std.math;
+import std.algorithm, std.array, std.stdio, std.conv;
 
 void main(string[] args)
 {

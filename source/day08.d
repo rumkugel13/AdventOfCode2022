@@ -6,12 +6,6 @@ void main(string[] args)
 {
     writeln("aoc22 day 08");
 
-    //     input = "30373
-    // 25512
-    // 65332
-    // 33549
-    // 35390";
-
     auto grid = input.split();
     const int rows = grid.length;
     const int cols = grid[0].length;

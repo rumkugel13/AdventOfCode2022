@@ -15,7 +15,7 @@ int findMarker(int range)
     for (int i = range; i < input.length; i++)
     {
         dchar[dchar] hashset;
-        foreach (key; input[i-range..i])
+        foreach (key; input[i - range .. i])
         {
             hashset[key] = key;
         }

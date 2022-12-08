@@ -1,6 +1,6 @@
 module day05;
 
-import std.stdio, std.algorithm, std.array, std.container, std.conv, std.uni, std.range;
+import std.stdio, std.algorithm, std.array, std.conv, std.uni;
 
 void main(string[] args)
 {
@@ -29,7 +29,7 @@ void main(string[] args)
         }
         else
         {
-            auto parts = key.split();
+            auto parts = split(key);
             auto amount = to!int(parts[1]);
             auto from = to!int(parts[3]) - 1;
             auto target = to!int(parts[5]) - 1;
@@ -45,14 +45,14 @@ void main(string[] args)
     write("part 1: ");
     foreach (key; crates)
     {
-        write(key.back());
+        write(key[$ - 1]);
     }
     writeln();
 
     write("part 2: ");
     foreach (key; crates2)
     {
-        write(key.back());
+        write(key[$ - 1]);
     }
     writeln();
 }

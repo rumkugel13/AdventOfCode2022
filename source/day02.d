@@ -1,6 +1,6 @@
 module day02;
 
-import std;
+import std.stdio, std.array;
 
 void main(string[] args)
 {
