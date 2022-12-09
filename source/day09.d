@@ -6,15 +6,6 @@ void main(string[] args)
 {
     writeln("aoc22 day 09");
 
-//     input = "R 4
-// U 4
-// L 3
-// D 1
-// R 4
-// D 1
-// L 5
-// R 2";
-
     int[2] head, tail;
 
     int[int[2]] tailPos;
@@ -84,15 +75,6 @@ void main(string[] args)
 
     writeln("part 1: ", tailPos.length);
 
-//         input = "R 5
-// U 8
-// L 8
-// D 3
-// R 17
-// D 10
-// L 25
-// U 20";
-
     int[2][10] rope;
 
     tailPos.clear();
@@ -141,6 +123,8 @@ void main(string[] args)
                         rope[n + 1][0] += sgn(rope[n][0] - rope[n + 1][0]);
                     }
                 }
+                else 
+                    break;
             }
 
             tailPos[[rope[9][0], rope[9][1]]] = 0;
