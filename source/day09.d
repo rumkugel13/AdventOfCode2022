@@ -15,57 +15,22 @@ void main(string[] args)
     {
         auto parts = line.split();
         int amount = to!int(parts[1]);
+        int axis = 0;
 
         foreach (_; 0 .. amount)
         {
-            switch (parts[0])
+            head[0] += parts[0] == "R" ? 1 : parts[0] == "L" ? -1 : 0;
+            head[1] += parts[0] == "D" ? 1 : parts[0] == "U" ? -1 : 0;
+            axis = parts[0] == "R" || parts[0] == "L" ? 0 : 1;
+
+            int other = (axis + 1) % 2;
+            if (abs(head[axis] - tail[axis]) > 1)
             {
-            case "R":
-                head[0] += 1;
-                if (abs(head[0] - tail[0]) > 1)
+                if (head[other] - tail[other] != 0)
                 {
-                    if (head[1] - tail[1] != 0)
-                    {
-                        tail[1] += head[1] - tail[1];
-                    }
-                    tail[0] += 1;
+                    tail[other] += head[other] - tail[other];
                 }
-                break;
-            case "L":
-                head[0] -= 1;
-                if (abs(head[0] - tail[0]) > 1)
-                {
-                    if (head[1] - tail[1] != 0)
-                    {
-                        tail[1] += head[1] - tail[1];
-                    }
-                    tail[0] -= 1;
-                }
-                break;
-            case "U":
-                head[1] -= 1;
-                if (abs(head[1] - tail[1]) > 1)
-                {
-                    if (head[0] - tail[0] != 0)
-                    {
-                        tail[0] += head[0] - tail[0];
-                    }
-                    tail[1] -= 1;
-                }
-                break;
-            case "D":
-                head[1] += 1;
-                if (abs(head[1] - tail[1]) > 1)
-                {
-                    if (head[0] - tail[0] != 0)
-                    {
-                        tail[0] += head[0] - tail[0];
-                    }
-                    tail[1] += 1;
-                }
-                break;
-            default:
-                break;
+                tail[axis] += sgn(head[axis] - tail[axis]);
             }
 
             tailPos[[tail[0], tail[1]]] = 0;
@@ -87,23 +52,8 @@ void main(string[] args)
 
         foreach (_; 0 .. amount)
         {
-            switch (parts[0])
-            {
-                case "R":
-                    rope[0][0] += 1;
-                    break;
-                case "L":
-                    rope[0][0] -= 1;
-                    break;
-                case "U":
-                    rope[0][1] -= 1;
-                    break;
-                case "D":
-                    rope[0][1] += 1;
-                    break;
-                default:
-                    break;
-            }
+            rope[0][0] += parts[0] == "R" ? 1 : parts[0] == "L" ? -1 : 0;
+            rope[0][1] += parts[0] == "D" ? 1 : parts[0] == "U" ? -1 : 0;
 
             foreach (n; 0 .. abs(rope.length) - 1)
             {
@@ -123,7 +73,7 @@ void main(string[] args)
                         rope[n + 1][0] += sgn(rope[n][0] - rope[n + 1][0]);
                     }
                 }
-                else 
+                else
                     break;
             }
 
