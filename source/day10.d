@@ -13,25 +13,16 @@ void main(string[] args)
     foreach (line; input.splitLines())
     {
         auto parts = line.split();
-        switch (parts[0])
+
+        foreach (_; 0 .. (parts[0] == "noop" ? 1 : 2))
         {
-        case "noop":
             cycle++;
             if ((cycle + 20) % 40 == 0)
                 result += cycle * X;
-            break;
-        case "addx":
-            foreach (_; 0 .. 2)
-            {
-                cycle++;
-                if ((cycle + 20) % 40 == 0)
-                    result += cycle * X;
-            }
-            X += to!int(parts[1]);
-            break;
-        default:
-            break;
         }
+
+        if (parts[0] == "addx")
+            X += to!int(parts[1]);
     }
 
     writeln("part 1: ", result);
@@ -42,31 +33,18 @@ void main(string[] args)
     foreach (line; input.splitLines())
     {
         auto parts = line.split();
-        switch (parts[0])
+
+        foreach (_; 0 .. (parts[0] == "noop" ? 1 : 2))
         {
-        case "noop":
-            {
-                auto col = cycle % 40;
-                cycle++;
-                write((col == X || col == X - 1 || col == X + 1) ? "#" : ".");
-                if (col == 39)
-                    writeln();
-            }
-            break;
-        case "addx":
-            foreach (_; 0 .. 2)
-            {
-                auto col = cycle % 40;
-                cycle++;
-                write((col == X || col == X - 1 || col == X + 1) ? "#" : ".");
-                if (col == 39)
-                    writeln();
-            }
-            X += to!int(parts[1]);
-            break;
-        default:
-            break;
+            auto col = cycle++ % 40;
+            write((col >= X - 1 && col <= X + 1) ? "##" : "  ");
+
+            if (col == 39)
+                writeln();
         }
+
+        if (parts[0] == "addx")
+            X += to!int(parts[1]);
     }
 
     writeln("part 2: look above");
