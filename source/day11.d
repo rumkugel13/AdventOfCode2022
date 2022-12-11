@@ -6,37 +6,9 @@ void main(string[] args)
 {
     writeln("aoc22 day 11");
 
-//     input = "Monkey 0:
-//   Starting items: 79, 98
-//   Operation: new = old * 19
-//   Test: divisible by 23
-//     If true: throw to monkey 2
-//     If false: throw to monkey 3
-
-// Monkey 1:
-//   Starting items: 54, 65, 75, 74
-//   Operation: new = old + 6
-//   Test: divisible by 19
-//     If true: throw to monkey 2
-//     If false: throw to monkey 0
-
-// Monkey 2:
-//   Starting items: 79, 60, 97
-//   Operation: new = old * old
-//   Test: divisible by 13
-//     If true: throw to monkey 1
-//     If false: throw to monkey 3
-
-// Monkey 3:
-//   Starting items: 74
-//   Operation: new = old + 3
-//   Test: divisible by 17
-//     If true: throw to monkey 0
-//     If false: throw to monkey 1";
-
     class Monkey
     {
-        int[] items;
+        ulong[] items;
         string op;
         int test;
         int[2] target;
@@ -46,22 +18,36 @@ void main(string[] args)
         {
             writeln(items, ",", op, ",", test, ",", target, ",", inspect);
         }
+
+        Monkey dup() const
+        {
+            Monkey monkey = new Monkey();
+            monkey.items = items.dup();
+            monkey.op = op;
+            monkey.test = test;
+            monkey.target = target.dup();
+            monkey.inspect = 0;
+            return monkey;
+        }
     }
 
-    Monkey[] monkeys;
+    Monkey[] monkeys, part2;
     auto lines = input.splitLines();
+    ulong modulo = 1;
 
     for (int i = 0; i < lines.length; i += 7)
     {
         Monkey temp = new Monkey();
-        temp.items = array(lines[i + 1].split(':')[1].split(',').map!(a => to!int(strip(a))));
+        temp.items = array(lines[i + 1].split(':')[1].split(',').map!(a => to!ulong(strip(a))));
         temp.op = lines[i + 2].split('=')[1].strip();
         temp.test = lines[i + 3].split("by")[1].strip().to!int();
+        modulo *= temp.test;
         temp.target = [
             lines[i + 4].split("monkey")[1].strip.to!int(),
             lines[i + 5].split("monkey")[1].strip.to!int()
         ];
         monkeys ~= temp;
+        part2 ~= temp.dup();
     }
 
     const int rounds = 20;
@@ -98,16 +84,61 @@ void main(string[] args)
         }
     }
 
-    int max1, max2;
+    ulong[] counts;
     foreach (monkey; monkeys)
     {
-        max1 = max(max1, max2);
-        max2 = max(max2, monkey.inspect);
+        counts ~= monkey.inspect;
     }
 
-    writeln("part 1: ", max1 * max2);
+    auto results = counts.sort().reverse();
 
-    writeln("part 2: ");
+    writeln(results[0], " ", results[1]);
+    writeln("part 1: ", results[0] * results[1]);
+
+    foreach (round; 0 .. 10_000)
+    {
+        foreach (monkey; part2)
+        {
+            monkey.inspect += monkey.items.length;
+            foreach (item; monkey.items)
+            {
+                auto op = monkey.op.split();
+                switch (op[1])
+                {
+                case "+":
+                    if (isNumeric(op[2]))
+                        item += to!int(op[2]);
+                    else
+                        item += item;
+                    break;
+                case "*":
+                    if (isNumeric(op[2]))
+                        item *= to!int(op[2]);
+                    else
+                        item *= item;
+                    break;
+                default:
+                    break;
+                }
+
+                item %= modulo;
+
+                part2[monkey.target[item % monkey.test == 0 ? 0: 1]].items ~= item;
+            }
+            monkey.items.length = 0;
+        }
+    }
+
+    counts.length = 0;
+    foreach (monkey; part2)
+    {
+        counts ~= monkey.inspect;
+    }
+
+    results = counts.sort().reverse();
+
+    writeln(results[0], " ", results[1]);
+    writeln("part 2: ", results[0] * results[1]);
 }
 
 string input = "Monkey 0:
