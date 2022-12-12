@@ -6,32 +6,7 @@ void main(string[] args)
 {
     writeln("aoc22 day 11");
 
-    class Monkey
-    {
-        ulong[] items;
-        string op;
-        int test;
-        int[2] target;
-        int inspect = 0;
-
-        void write()
-        {
-            writeln(items, ",", op, ",", test, ",", target, ",", inspect);
-        }
-
-        Monkey dup() const
-        {
-            Monkey monkey = new Monkey();
-            monkey.items = items.dup();
-            monkey.op = op;
-            monkey.test = test;
-            monkey.target = target.dup();
-            monkey.inspect = 0;
-            return monkey;
-        }
-    }
-
-    Monkey[] monkeys, part2;
+    Monkey[] part1, part2;
     auto lines = input.splitLines();
     ulong modulo = 1;
 
@@ -39,44 +14,50 @@ void main(string[] args)
     {
         Monkey temp = new Monkey();
         temp.items = array(lines[i + 1].split(':')[1].split(',').map!(a => to!ulong(strip(a))));
-        temp.op = lines[i + 2].split('=')[1].strip();
+        temp.op = lines[i + 2].split()[$ - 3 .. $];
         temp.test = lines[i + 3].split("by")[1].strip().to!int();
         modulo *= temp.test;
         temp.target = [
-            lines[i + 4].split("monkey")[1].strip.to!int(),
-            lines[i + 5].split("monkey")[1].strip.to!int()
+            lines[i + 4].split("monkey")[1].strip().to!int(),
+            lines[i + 5].split("monkey")[1].strip().to!int()
         ];
-        monkeys ~= temp;
+        part1 ~= temp;
         part2 ~= temp.dup();
     }
 
-    const int rounds = 20;
-    foreach (round; 0 .. rounds)
+    auto results = doRounds(part1, false);
+
+    writeln(results[0], " ", results[1]);
+    writeln("part 1: ", results[0] * results[1]);
+
+    results = doRounds(part2, true, modulo);
+
+    writeln(results[0], " ", results[1]);
+    writeln("part 2: ", results[0] * results[1]);
+}
+
+ulong[] doRounds(Monkey[] monkeys, bool part2, ulong modulo = 0)
+{
+    foreach (round; 0 .. part2 ? 10_000 : 20)
     {
         foreach (monkey; monkeys)
         {
             monkey.inspect += monkey.items.length;
             foreach (item; monkey.items)
             {
-                auto op = monkey.op.split();
-                switch (op[1])
+                if (monkey.op[1] == "+")
                 {
-                case "+":
-                    if (isNumeric(op[2]))
-                        item += to!int(op[2]);
-                    else
-                        item += item;
-                    break;
-                case "*":
-                    if (isNumeric(op[2]))
-                        item *= to!int(op[2]);
-                    else
-                        item *= item;
-                    break;
-                default:
-                    break;
+                    item += isNumeric(monkey.op[2]) ? to!int(monkey.op[2]) : item;
                 }
-                item /= 3;
+                else if (monkey.op[1] == "*")
+                {
+                    item *= isNumeric(monkey.op[2]) ? to!int(monkey.op[2]) : item;
+                }
+
+                if (!part2)
+                    item /= 3;
+                else
+                    item %= modulo;
 
                 monkeys[monkey.target[item % monkey.test == 0 ? 0: 1]].items ~= item;
             }
@@ -85,60 +66,28 @@ void main(string[] args)
     }
 
     ulong[] counts;
-    foreach (monkey; monkeys)
+    monkeys.each!(m => counts ~= m.inspect);
+    return counts.sort().array().reverse()[0 .. 2];
+}
+
+class Monkey
+{
+    ulong[] items;
+    string[] op;
+    int test;
+    int[2] target;
+    int inspect = 0;
+
+    Monkey dup() const
     {
-        counts ~= monkey.inspect;
+        Monkey monkey = new Monkey();
+        monkey.items = items.dup();
+        monkey.op = op.dup();
+        monkey.test = test;
+        monkey.target = target.dup();
+        monkey.inspect = 0;
+        return monkey;
     }
-
-    auto results = counts.sort().reverse();
-
-    writeln(results[0], " ", results[1]);
-    writeln("part 1: ", results[0] * results[1]);
-
-    foreach (round; 0 .. 10_000)
-    {
-        foreach (monkey; part2)
-        {
-            monkey.inspect += monkey.items.length;
-            foreach (item; monkey.items)
-            {
-                auto op = monkey.op.split();
-                switch (op[1])
-                {
-                case "+":
-                    if (isNumeric(op[2]))
-                        item += to!int(op[2]);
-                    else
-                        item += item;
-                    break;
-                case "*":
-                    if (isNumeric(op[2]))
-                        item *= to!int(op[2]);
-                    else
-                        item *= item;
-                    break;
-                default:
-                    break;
-                }
-
-                item %= modulo;
-
-                part2[monkey.target[item % monkey.test == 0 ? 0: 1]].items ~= item;
-            }
-            monkey.items.length = 0;
-        }
-    }
-
-    counts.length = 0;
-    foreach (monkey; part2)
-    {
-        counts ~= monkey.inspect;
-    }
-
-    results = counts.sort().reverse();
-
-    writeln(results[0], " ", results[1]);
-    writeln("part 2: ", results[0] * results[1]);
 }
 
 string input = "Monkey 0:
