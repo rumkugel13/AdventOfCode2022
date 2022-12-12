@@ -41,8 +41,9 @@ void main(string[] args)
     writeln("width: ", lines[0].length, " height: ", lines.length);
     writeln("start: ", start, " end: ", end);
 
-    int[Point] distances;
-    distances[start] = 0;
+    Point[4] deltas = [{1, 0}, {-1, 0}, {0, 1}, {0, -1}];
+
+    int[Point] distances = [start: 0];
 
     DList!Point queue;
     queue.insertBack(start);
@@ -53,41 +54,18 @@ void main(string[] args)
         queue.removeFront();
 
         auto check = p == start ? 'a' : p == end ? 'z' : lines[p.y][p.x];
-        Point temp;
         int dist = distances[p];
 
-        void checkAndAdd(Point p)
+        foreach (delta; deltas)
         {
-            if ((((p == end ? 'z' : lines[p.y][p.x]) - check) <= 1) && !(p in distances))
-            {
-                queue.insertBack(p);
-                distances[p] = dist + 1;
-            }
-        }
-
-        if (p.x - 1 >= 0)
-        {
-            temp.x = p.x - 1;
-            temp.y = p.y;
-            checkAndAdd(temp);
-        }
-        if (p.x + 1 < lines[0].length)
-        {
-            temp.x = p.x + 1;
-            temp.y = p.y;
-            checkAndAdd(temp);
-        }
-        if (p.y - 1 >= 0)
-        {
-            temp.x = p.x;
-            temp.y = p.y - 1;
-            checkAndAdd(temp);
-        }
-        if (p.y + 1 < lines.length)
-        {
-            temp.x = p.x;
-            temp.y = p.y + 1;
-            checkAndAdd(temp);
+            Point temp = {p.x + delta.x, p.y + delta.y};
+            if (temp.x >= 0 && temp.x < lines[0].length && temp.y >= 0 && temp.y < lines.length)
+                if (temp == end ? 'z' : lines[temp.y][temp.x] - check <= 1)
+                    if (temp !in distances)
+                    {
+                        queue.insertBack(temp);
+                        distances[temp] = dist + 1;
+                    }
         }
     }
 
