@@ -1,16 +1,10 @@
 module day12;
 
-import std.stdio, std.string, std.array, std.algorithm, std.container, std.math;
+import std.stdio, std.string, std.array, std.algorithm, std.container;
 
 void main(string[] args)
 {
     writeln("aoc22 day 12");
-
-    //     input = "Sabqponm
-    // abcryxxl
-    // accszExk
-    // acctuvwj
-    // abdefghi";
 
     struct Point
     {
