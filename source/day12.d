@@ -20,6 +20,7 @@ void main(string[] args)
 
     auto lines = input.splitLines();
     Point start, end;
+    Point[] ays;
 
     foreach (y, line; lines)
     {
@@ -35,6 +36,11 @@ void main(string[] args)
                 end.x = x;
                 end.y = y;
             }
+            if (c == 'a')
+            {
+                Point p = {x, y};
+                ays ~= p;
+            }
         }
     }
 
@@ -43,10 +49,10 @@ void main(string[] args)
 
     Point[4] deltas = [{1, 0}, {-1, 0}, {0, 1}, {0, -1}];
 
-    int[Point] distances = [start: 0];
+    int[Point] distances = [end: 0];
 
     DList!Point queue;
-    queue.insertBack(start);
+    queue.insertBack(end);
 
     while (queue.opSlice().count > 0)
     {
@@ -60,7 +66,7 @@ void main(string[] args)
         {
             Point temp = {p.x + delta.x, p.y + delta.y};
             if (temp.x >= 0 && temp.x < lines[0].length && temp.y >= 0 && temp.y < lines.length)
-                if (temp == end ? 'z' : lines[temp.y][temp.x] - check <= 1)
+                if (temp == start ? 'a' : lines[temp.y][temp.x] - check >= -1)
                     if (temp !in distances)
                     {
                         queue.insertBack(temp);
@@ -69,8 +75,15 @@ void main(string[] args)
         }
     }
 
-    writeln("part 1: ", distances[end]);
-    writeln("part 2: ");
+    writeln("part 1: ", distances[start]);
+
+    int min = int.max;
+    foreach (a; ays)
+    {
+        if (a in distances && distances[a] < min)
+            min = distances[a];
+    }
+    writeln("part 2: ", min);
 }
 
 string input = "abccccccccccccccccaaccccccccccccccccccccaaaaaaaaaaaaacccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaa
