@@ -40,7 +40,7 @@ void main(string[] args)
                 int filesize = to!int(parts[0]);
                 filesystem[path] += filesize;
 
-                for (int i = lastIndexOf(path, '/'); i > 0; i = lastIndexOf(path[0 .. i], '/'))
+                for (size_t i = lastIndexOf(path, '/'); i > 0; i = lastIndexOf(path[0 .. i], '/'))
                 {
                     filesystem[path[0 .. i]] += filesize;
                 }

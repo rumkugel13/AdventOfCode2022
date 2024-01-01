@@ -7,8 +7,8 @@ void main(string[] args)
     writeln("aoc22 day 08");
 
     auto grid = input.split();
-    const int rows = grid.length;
-    const int cols = grid[0].length;
+    const size_t rows = grid.length;
+    const size_t cols = grid[0].length;
     writeln("rows: ", rows, " cols: ", cols);
 
     int count = 0;

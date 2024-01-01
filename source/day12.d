@@ -8,8 +8,8 @@ void main(string[] args)
 
     struct Point
     {
-        int x;
-        int y;
+        size_t x;
+        size_t y;
     }
 
     auto lines = input.splitLines();
