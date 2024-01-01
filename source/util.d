@@ -1,6 +1,6 @@
 module util;
 
-import std.stdio, std.string, std.conv, std.algorithm, std.array;
+import std.stdio, std.string, std.conv, std.algorithm, std.array, std.math;
 
 string[] readLines(string file)
 {
@@ -22,5 +22,10 @@ struct Point
     Point opUnary(string op)() if (op == "-")
     {
         return Point(-this.row, -this.col);
+    }
+
+    int manhattanDistance(Point other)
+    {
+        return abs(this.col - other.col) + abs(this.row - other.row);
     }
 }
