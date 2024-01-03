@@ -45,6 +45,7 @@ long beaconTuningFrequency(SensorBeacon[] sensorsAndBeacons, int maxPos)
         auto dir = (range.end - range.begin) / len;
         for (int i = 1; i < len; i++)
         {
+            // todo: dont use all points, but only intersections of multiple ranges
             bool found = true;
             Point p = range.begin + dir * i;
             if (!(p.row >= 0 && p.col >= 0 && p.row <= maxPos && p.col <= maxPos))
@@ -88,6 +89,7 @@ int beaconsCannotBeAt(SensorBeacon[] sensorsAndBeacons, int y)
             int span = (dist - distToLine);
             for (auto dx = -span; dx <= span; dx++)
             {
+                // todo: use ranges and merge them at the end
                 definitelyNotHere[Point(y, sensorAndBeacon.sensor.col + dx)] = true;
             }
             definitelyNotHere.remove(sensorAndBeacon.beacon);

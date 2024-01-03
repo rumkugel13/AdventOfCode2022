@@ -14,9 +14,9 @@ void main()
     int max = int.min;
     int temp = 0;
 
-    foreach (key; input)
+    foreach (line; input)
     {
-        if (key.length == 0)
+        if (line.length == 0)
         {
             if (temp > max)
                 max = temp;
@@ -24,7 +24,7 @@ void main()
         }
         else
         {
-            temp += to!int(key);
+            temp += to!int(line);
         }
     }
 
@@ -35,9 +35,9 @@ void main()
     int max3 = int.min;
     temp = 0;
 
-    foreach (key; input)
+    foreach (line; input)
     {
-        if (key.length == 0)
+        if (line.length == 0)
         {
             if (temp > max1)
             {
@@ -59,7 +59,7 @@ void main()
         }
         else
         {
-            temp += to!int(key);
+            temp += to!int(line);
         }
     }
 
