@@ -4,7 +4,7 @@ import std.stdio, std.string, std.conv, std.algorithm, std.array, std.math;
 
 string[] readLines(string file)
 {
-    return File(file).byLineCopy.map!strip.array;
+    return File(file).byLineCopy.map!chomp.array;
 }
 
 struct Point

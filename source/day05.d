@@ -7,7 +7,7 @@ void main(string[] args)
 {
     writeln("aoc22 day 05");
 
-    auto input = File("input/05.txt").byLineCopy.map!(a => a.stripRight("\n").stripRight("\r\n")).array;
+    auto input = readLines("input/05.txt");
     char[][] crates, crates2;
 
     foreach (key; input)
