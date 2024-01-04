@@ -9,10 +9,10 @@ void day13()
     auto lines = readLines("example/13.txt");
     Pair[] pairs;
 
-    for (int i = 0; i < lines.length; i+=3)
+    for (int i = 0; i < lines.length; i += 3)
     {
         auto left = lines[i];
-        auto right = lines[i+1];
+        auto right = lines[i + 1];
         pairs ~= Pair(left, right);
     }
 
@@ -28,7 +28,8 @@ void day13()
     writeln("part 2: ", 0);
 }
 
-struct Pair {
+struct Pair
+{
     string a, b;
 }
 
@@ -61,7 +62,7 @@ bool checkList(Pair pair, int* indexA, int* indexB)
 
         if (charA == ',' && charB == ',')
             continue;
-        
+
         if (charA == '[' && charB != '[')
         {
             //convert b to list
@@ -79,10 +80,10 @@ bool checkList(Pair pair, int* indexA, int* indexB)
             if (!checkList(pair, indexA, indexB))
             {
                 return false;
-            } 
+            }
             continue;
         }
-        
+
         if (charA > charB)
             return false;
     }
