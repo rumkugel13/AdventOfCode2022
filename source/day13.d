@@ -3,36 +3,10 @@ module day13;
 import std.stdio, std.string, std.array, std.algorithm, std.container;
 import util;
 
-void main(string[] args)
+void day13()
 {
     writeln("aoc22 day 13");
-    auto lines = readLines("input/13.txt");
-
-    auto input = "[1,1,3,1,1]
-[1,1,5,1,1]
-
-[[1],[2,3,4]]
-[[1],4]
-
-[9]
-[[8,7,6]]
-
-[[4,4],4,4]
-[[4,4],4,4,4]
-
-[7,7,7,7]
-[7,7,7]
-
-[]
-[3]
-
-[[[]]]
-[[]]
-
-[1,[2,[3,[4,[5,6,7]]]],8,9]
-[1,[2,[3,[4,[5,6,0]]]],8,9]";
-
-    lines = input.splitLines();
+    auto lines = readLines("example/13.txt");
     Pair[] pairs;
 
     for (int i = 0; i < lines.length; i+=3)

@@ -5,7 +5,7 @@ import std.array;
 import std.conv;
 import util;
 
-void main()
+void day01()
 {
     writeln("aoc22 day01");
 

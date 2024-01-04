@@ -3,7 +3,7 @@ module day02;
 import std.stdio, std.array;
 import util;
 
-void main(string[] args)
+void day02()
 {
     writeln("aoc22 day02");
 

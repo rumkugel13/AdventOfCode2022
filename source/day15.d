@@ -7,7 +7,7 @@ import std.algorithm;
 import std.math;
 import util;
 
-void main(string[] args)
+void day15()
 {
     writeln("aoc22 day 15");
     auto lines = readLines("input/15.txt");

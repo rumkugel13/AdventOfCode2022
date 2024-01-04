@@ -3,7 +3,7 @@ module day10;
 import std.stdio, std.string, std.conv;
 import util;
 
-void main(string[] args)
+void day10()
 {
     writeln("aoc22 day 10");
     auto input = readLines("input/10.txt");

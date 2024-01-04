@@ -7,7 +7,7 @@ import std.algorithm;
 import std.math : abs;
 import util;
 
-void main(string[] args)
+void day14()
 {
     writeln("aoc22 day 14");
 
@@ -113,7 +113,7 @@ char[Point] buildCave(string[] lines, out int floor)
             auto data = part.split(",");
             points ~= Point(data[1].to!int, data[0].to!int);
         }
-        for (auto i = 0; i < points.length - 1; i++)
+        for (auto i = 0; i + 1 < points.length; i++)
         {
             auto start = points[i];
             auto end = points[i + 1];
