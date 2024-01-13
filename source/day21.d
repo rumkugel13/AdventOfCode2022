@@ -34,7 +34,7 @@ long part1(string[string] monkeys)
 
         string monkeyVal = monkeys[current];
 
-        if (monkeyVal.length < 4)
+        if (monkeyVal[0] >= '0' && monkeyVal[0] <= '9')
         {
             long val = monkeyVal.to!long;
             shout[current] = val;
