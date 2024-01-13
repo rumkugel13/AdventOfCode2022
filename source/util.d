@@ -37,3 +37,8 @@ struct Point
         return abs(this.col - other.col) + abs(this.row - other.row);
     }
 }
+
+int mod(int a, int m)
+{
+    return ((a % m) + m) % m;
+}

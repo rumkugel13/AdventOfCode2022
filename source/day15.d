@@ -95,7 +95,7 @@ int beaconsCannotBeAt(SensorBeacon[] sensorsAndBeacons, int y)
             definitelyNotHere.remove(sensorAndBeacon.beacon);
         }
     }
-    return definitelyNotHere.length;
+    return cast(int)definitelyNotHere.length;
 }
 
 struct SensorBeacon
