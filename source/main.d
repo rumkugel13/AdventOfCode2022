@@ -1,7 +1,7 @@
 module main;
 
 import day01, day02, day03, day04, day05, day06, day07, day08, day09, day10;
-import day11, day12, day13, day14, day15, day17, day20;
+import day11, day12, day14, day15, day20;
 import day21;
 
 void main(string[] args)
@@ -18,10 +18,10 @@ void main(string[] args)
     day10.day10();
     day11.day11();
     day12.day12();
-    // day13.day13();
+
     day14.day14();
     day15.day15();
-    // day17.day17();
+    
     day20.day20();
     day21.day21();
 }
