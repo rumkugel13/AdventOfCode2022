@@ -4,5 +4,5 @@
 
 ## Progress
 
-- Finished: Days 01-12, 14-15, 20, 21 Part 1
-- Todo: Days 13, 16-19, 21 Part 2, 22-25
+- Finished: Days 01-12, 14-15, 17 Part 1, 20, 21 Part 1
+- Todo: Days 13, 16, 17 Part 2, 18-19, 21 Part 2, 22-25
