@@ -112,7 +112,7 @@ int placeBlock(string[] rock, char[Point]* chamber, int height, int left)
         {
             if (c == '.')
                 continue;
-            auto point = Point((rock.length - y - 1) + height, x + left);
+            auto point = Point(cast(int)(rock.length - y - 1) + height, cast(int)x + left);
             (*chamber)[point] = c;
             maxHeight = max(maxHeight, point.row);
         }
@@ -128,7 +128,7 @@ bool canMoveHor(string[] rock, char[Point] chamber, int height, int left, int di
         {
             if (c == '.')
                 continue;
-            auto check = Point((rock.length - y - 1) + height, x + left + dir);
+            auto check = Point(cast(int)(rock.length - y - 1) + height, cast(int)x + left + dir);
             if (check.col < 0 || check.col > 6 || check in chamber)
             {
                 return false;
@@ -147,7 +147,7 @@ bool canMoveDown(string[] rock, char[Point] chamber, int height, int left)
         {
             if (c == '.')
                 continue;
-            auto check = Point((rock.length - y - 1) + height - 1, x + left);
+            auto check = Point(cast(int)(rock.length - y - 1) + height - 1, cast(int)x + left);
             if (check in chamber || check.row < 0)
             {
                 return false;
